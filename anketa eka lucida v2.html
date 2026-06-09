@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анкета первичного клиента — @eka.lucida</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --terracotta: #C4956A;
+    --terracotta-dark: #9E6E47;
+    --terracotta-light: rgba(196,149,106,0.12);
+    --text: #3D2E22;
+    --text-light: #8A7060;
+    --white: #FDFAF5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--cream);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(ellipse, rgba(196,149,106,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -60px; right: -60px;
+    width: 350px; height: 350px;
+    background: radial-gradient(ellipse, rgba(196,149,106,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 44px 80px;
+    position: relative;
+    z-index: 1;
+  }
+  .header { text-align: center; margin-bottom: 52px; }
+  .leaf-icon { display: block; margin: 0 auto 20px; }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 2.2rem;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+  .header .subtitle {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    font-weight: 400;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 28px 0;
+    color: var(--terracotta);
+    opacity: 0.5;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--terracotta);
+    opacity: 0.4;
+  }
+  .divider span { font-size: 0.45rem; letter-spacing: 2px; }
+  .intro {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text-light);
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+  .section { margin-bottom: 44px; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--terracotta-dark);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-number {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--terracotta);
+    opacity: 0.6;
+    min-width: 24px;
+  }
+  .field { margin-bottom: 22px; }
+  label {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid rgba(196,149,106,0.25);
+    border-bottom: 1.5px solid rgba(196,149,106,0.5);
+    border-radius: 2px;
+    padding: 12px 16px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.25s;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--terracotta);
+    background: #FEFCF8;
+  }
+  textarea { min-height: 72px; resize: vertical; line-height: 1.6; }
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C4956A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .check-group { display: flex; flex-direction: column; gap: 8px; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    padding: 9px 14px;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .check-item:hover { background: var(--terracotta-light); }
+  .check-item input[type="checkbox"],
+  .check-item input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--terracotta);
+  }
+  .check-label {
+    font-size: 0.87rem;
+    color: var(--text);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .scale-row { display: flex; align-items: center; gap: 14px; margin-top: 8px; }
+  .scale-label { font-size: 0.72rem; color: var(--text-light); white-space: nowrap; }
+  .scale-options { display: flex; gap: 5px; flex: 1; }
+  .scale-btn {
+    flex: 1;
+    border: 1.5px solid rgba(196,149,106,0.3);
+    background: var(--white);
+    border-radius: 2px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 4px 0;
+  }
+  .scale-btn:hover, .scale-btn.active {
+    background: var(--terracotta);
+    color: white;
+    border-color: var(--terracotta);
+  }
+  .hint {
+    font-size: 0.73rem;
+    color: var(--terracotta);
+    font-style: italic;
+    margin-top: 6px;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .sublabel {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 400;
+    margin: 16px 0 10px;
+  }
+  .info-box {
+    background: rgba(196,149,106,0.08);
+    border-left: 2px solid var(--terracotta);
+    padding: 16px 20px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .info-box p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .submit-btn {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    margin: 48px auto 0;
+    padding: 16px 32px;
+    background: transparent;
+    border: 1.5px solid var(--terracotta);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terracotta-dark);
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 1px;
+  }
+  .submit-btn:hover { background: var(--terracotta); color: var(--white); }
+  .footer {
+    margin-top: 56px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--terracotta);
+  }
+  .branch { display: block; margin: 0 auto; opacity: 0.3; }
+  @media (max-width: 600px) {
+    .container { padding: 40px 20px 60px; }
+    .row, .row3 { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <svg class="leaf-icon" width="28" height="36" viewBox="0 0 28 36" fill="none">
+      <path d="M14 2C14 2 4 8 4 18C4 25.732 8.477 32 14 34C19.523 32 24 25.732 24 18C24 8 14 2 14 2Z" stroke="#C4956A" stroke-width="1.2" fill="rgba(196,149,106,0.08)"/>
+      <line x1="14" y1="8" x2="14" y2="34" stroke="#C4956A" stroke-width="0.8" opacity="0.5"/>
+      <path d="M14 14 Q10 17 8 22" stroke="#C4956A" stroke-width="0.7" fill="none" opacity="0.4"/>
+      <path d="M14 14 Q18 17 20 22" stroke="#C4956A" stroke-width="0.7" fill="none" opacity="0.4"/>
+    </svg>
+    <h1>Анкета первичного клиента</h1>
+    <div class="subtitle">эмоциональная нутрициология · @eka.lucida</div>
+  </div>
+
+  <p class="intro">
+    Это не тест. Это разговор до разговора.<br>
+    Чем честнее — тем точнее мы поймём, где именно начинать.
+  </p>
+
+  <div class="divider"><span>◆</span></div>
+
+  <form action="https://formspree.io/f/mqejogay" method="POST">
+    <input type="hidden" name="_subject" value="Новая анкета · @eka.lucida">
+
+    <!-- БЛОК 1: Основное -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">01</span>Основное</div>
+      <div class="row">
+        <div class="field">
+          <label>Имя и фамилия</label>
+          <input type="text" name="01_Имя" placeholder="Полностью">
+        </div>
+        <div class="field">
+          <label>Возраст</label>
+          <input type="number" name="01_Возраст" placeholder="лет" min="16" max="80">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Рост (см)</label>
+          <input type="number" name="01_Рост" placeholder="см">
+        </div>
+        <div class="field">
+          <label>Вес (кг)</label>
+          <input type="number" name="01_Вес" placeholder="кг">
+        </div>
+      </div>
+      <div class="field">
+        <label>Город проживания</label>
+        <input type="text" name="01_Город" placeholder="Страна, город">
+      </div>
+      <div class="field">
+        <label>Главный запрос — одной фразой</label>
+        <input type="text" name="01_Запрос" placeholder="Что хочешь изменить или понять?">
+        <p class="hint">Первая мысль — самая честная.</p>
+      </div>
+      <div class="field">
+        <label>Как давно беспокоит?</label>
+        <select name="01_Давность">
+          <option value="" disabled selected>выбери</option>
+          <option>Меньше 3 месяцев</option>
+          <option>3–6 месяцев</option>
+          <option>Полгода — год</option>
+          <option>1–3 года</option>
+          <option>Больше 3 лет</option>
+          <option>Сколько себя помню</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 2: Симптомы -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">02</span>Симптомы и жалобы</div>
+      <p class="hint" style="margin-bottom:16px;">Отмечай всё, что есть прямо сейчас или бывает регулярно.</p>
+
+      <p class="sublabel">Энергия и голова</p>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Хроническая усталость — не восстанавливаюсь даже после сна"><span class="check-label">Хроническая усталость — даже после сна не восстанавливаюсь</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Сонливость после еды"><span class="check-label">Сонливость после еды</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Туман в голове, сложно сосредоточиться"><span class="check-label">Туман в голове, сложно сосредоточиться</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Проблемы с памятью и концентрацией"><span class="check-label">Проблемы с памятью и концентрацией</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Головные боли — частые или хронические"><span class="check-label">Головные боли — частые или хронические</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Головокружения"><span class="check-label">Головокружения</span></label>
+      </div>
+
+      <p class="sublabel" style="margin-top:18px;">Вес и обмен веществ</p>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Набор веса или невозможность похудеть при нормальном питании"><span class="check-label">Набор веса или невозможность похудеть при нормальном питании</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Тяга к сладкому — особенно вечером или на стрессе"><span class="check-label">Тяга к сладкому — особенно вечером или на стрессе</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Тяга к солёному или острому"><span class="check-label">Тяга к солёному или острому</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Резкие перепады аппетита"><span class="check-label">Резкие перепады аппетита</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Отёки — лицо, ноги, руки"><span class="check-label">Отёки — лицо, ноги, руки</span></label>
+      </div>
+
+      <p class="sublabel" style="margin-top:18px;">Кожа, волосы, ногти</p>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Акне — подбородок, щёки, лоб"><span class="check-label">Акне — подбородок, щёки, лоб</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Сухость кожи, шелушение"><span class="check-label">Сухость кожи, шелушение</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Покраснения, розацеа"><span class="check-label">Покраснения, розацеа</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Пигментные пятна"><span class="check-label">Пигментные пятна</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Выпадение волос"><span class="check-label">Выпадение волос</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Ломкость и слоение ногтей"><span class="check-label">Ломкость и слоение ногтей</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Белые пятна на ногтях"><span class="check-label">Белые пятна на ногтях</span></label>
+      </div>
+
+      <p class="sublabel" style="margin-top:18px;">Тело и боли</p>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Боли в суставах"><span class="check-label">Боли в суставах</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Боли или напряжение в мышцах"><span class="check-label">Боли или напряжение в мышцах</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Онемение или покалывание в руках и ногах"><span class="check-label">Онемение или покалывание в руках, ногах</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Повышенное давление"><span class="check-label">Повышенное давление</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Пониженное давление"><span class="check-label">Пониженное давление</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Учащённое сердцебиение"><span class="check-label">Учащённое сердцебиение</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Зябкость — постоянно мёрзну"><span class="check-label">Зябкость — постоянно мёрзну</span></label>
+        <label class="check-item"><input type="checkbox" name="02_Симптомы[]" value="Повышенная потливость"><span class="check-label">Повышенная потливость</span></label>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 3: Пищеварение -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">03</span>Пищеварение</div>
+      <div class="check-group" style="margin-bottom:18px;">
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Вздутие после еды"><span class="check-label">Вздутие после еды</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Ощущение надутого живота в течение дня — метеоризм"><span class="check-label">Ощущение надутого живота в течение дня, метеоризм</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Чрезмерная отрыжка"><span class="check-label">Чрезмерная отрыжка</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Изжога, кислый рефлюкс, ком в горле"><span class="check-label">Изжога, кислый рефлюкс, ком в горле</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Тяжесть в правом подреберье, тошнота после жирного"><span class="check-label">Тяжесть в правом подреберье, тошнота после жирного</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Плохой привкус во рту"><span class="check-label">Плохой привкус во рту</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Запах изо рта"><span class="check-label">Запах изо рта</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Нет аппетита утром"><span class="check-label">Нет аппетита утром</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Запоры (реже 1 раза в день)"><span class="check-label">Запоры (реже 1 раза в день)</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Диарея или жидкий стул"><span class="check-label">Диарея или жидкий стул</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Чередование запоров и диареи"><span class="check-label">Чередование запоров и диареи</span></label>
+        <label class="check-item"><input type="checkbox" name="03_ЖКТ[]" value="Непереваренная еда в стуле"><span class="check-label">Непереваренная еда в стуле</span></label>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Частота стула</label>
+          <select name="03_Стул_частота">
+            <option value="" disabled selected>выбери</option>
+            <option>Несколько раз в день</option>
+            <option>1 раз в день</option>
+            <option>Раз в 2 дня</option>
+            <option>Раз в 3 дня и реже</option>
+            <option>Нестабильно</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Диагнозы по ЖКТ</label>
+          <select name="03_Диагноз_ЖКТ">
+            <option value="" disabled selected>выбери</option>
+            <option>Нет / не обследовалась</option>
+            <option>Гастрит</option>
+            <option>ГЭРБ</option>
+            <option>СРК</option>
+            <option>Панкреатит</option>
+            <option>Дисбиоз</option>
+            <option>Несколько диагнозов</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Уточни диагнозы (если несколько)</label>
+        <input type="text" name="03_Диагноз_уточнение" placeholder="или оставь пустым">
+      </div>
+
+      <div class="field">
+        <label>Аллергии и пищевая непереносимость</label>
+        <select name="03_Аллергии">
+          <option value="" disabled selected>выбери</option>
+          <option>Нет</option>
+          <option>Лактоза</option>
+          <option>Глютен</option>
+          <option>Орехи</option>
+          <option>Яйца</option>
+          <option>Несколько / другое</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Уточни аллергии (если несколько или другое)</label>
+        <input type="text" name="03_Аллергии_уточнение" placeholder="или оставь пустым">
+      </div>
+
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="03_Питание[]" value="Веган или вегетарианец"><span class="check-label">Веган или вегетарианец</span></label>
+        <label class="check-item"><input type="checkbox" name="03_Питание[]" value="Тянет на сладкое / мучное"><span class="check-label">Тянет на сладкое / мучное</span></label>
+        <label class="check-item"><input type="checkbox" name="03_Питание[]" value="Тянет на солёное / кислое"><span class="check-label">Тянет на солёное / кислое</span></label>
+        <label class="check-item"><input type="checkbox" name="03_Питание[]" value="Желание грызть лёд, мел, землю"><span class="check-label">Желание грызть лёд, мел или землю</span></label>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 4: Сон и режим -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">04</span>Сон и режим дня</div>
+      <div class="row">
+        <div class="field">
+          <label>Сон (часов в сутки)</label>
+          <select name="04_Сон_часы">
+            <option value="" disabled selected>выбери</option>
+            <option>Меньше 6</option>
+            <option>6–7</option>
+            <option>7–8</option>
+            <option>Больше 8</option>
+            <option>Нестабильно</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Качество сна</label>
+          <select name="04_Сон_качество">
+            <option value="" disabled selected>выбери</option>
+            <option>Засыпаю легко, сплю крепко</option>
+            <option>Долго засыпаю</option>
+            <option>Просыпаюсь ночью</option>
+            <option>Сплю, но не высыпаюсь</option>
+            <option>Несколько проблем сразу</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Просыпаюсь ночью</label>
+        <select name="04_Пробуждения">
+          <option value="" disabled selected>выбери</option>
+          <option>Нет</option>
+          <option>Редко (раз в неделю)</option>
+          <option>Несколько раз в неделю</option>
+          <option>Почти каждую ночь</option>
+          <option>Каждую ночь, несколько раз</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Утреннее состояние</label>
+        <select name="04_Утро">
+          <option value="" disabled selected>выбери</option>
+          <option>Просыпаюсь бодрой</option>
+          <option>Нужно время чтобы раскачаться</option>
+          <option>Просыпаюсь уставшей</option>
+          <option>Тяжело встать, нет сил</option>
+        </select>
+      </div>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="04_Сон[]" value="Хроническая усталость дольше 3 месяцев"><span class="check-label">Хроническая усталость длится больше 3 месяцев</span></label>
+        <label class="check-item"><input type="checkbox" name="04_Сон[]" value="Сплю больше 9 часов и всё равно не высыпаюсь"><span class="check-label">Сплю больше 9 часов и всё равно не высыпаюсь</span></label>
+        <label class="check-item"><input type="checkbox" name="04_Сон[]" value="Днём непреодолимое желание спать"><span class="check-label">Днём непреодолимое желание спать</span></label>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 5: Образ жизни -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">05</span>Образ жизни</div>
+      <div class="row">
+        <div class="field">
+          <label>Приёмы пищи в день</label>
+          <select name="05_Приёмы_пищи">
+            <option value="" disabled selected>выбери</option>
+            <option>1–2</option>
+            <option>3</option>
+            <option>4–5</option>
+            <option>Хаотично, без режима</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Вода (литров в день)</label>
+          <select name="05_Вода">
+            <option value="" disabled selected>выбери</option>
+            <option>Меньше 1 л</option>
+            <option>1–1.5 л</option>
+            <option>1.5–2 л</option>
+            <option>Больше 2 л</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Физическая активность</label>
+          <select name="05_Активность">
+            <option value="" disabled selected>выбери</option>
+            <option>Нет совсем</option>
+            <option>Прогулки, лёгкое движение</option>
+            <option>1–2 раза в неделю</option>
+            <option>3–5 раз в неделю</option>
+            <option>Ежедневно / интенсивно</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Работа</label>
+          <select name="05_Работа">
+            <option value="" disabled selected>выбери</option>
+            <option>Сидячая / за компьютером</option>
+            <option>На ногах</option>
+            <option>Смешанная</option>
+            <option>Много за рулём</option>
+            <option>Физический труд</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="05_Привычки[]" value="Кофе натощак"><span class="check-label">Кофе натощак</span></label>
+        <label class="check-item"><input type="checkbox" name="05_Привычки[]" value="Ем на бегу, за экраном, в спешке"><span class="check-label">Ем на бегу, за экраном, в спешке</span></label>
+        <label class="check-item"><input type="checkbox" name="05_Привычки[]" value="Перерывы между едой 5+ часов"><span class="check-label">Длительные перерывы между едой (5+ часов)</span></label>
+        <label class="check-item"><input type="checkbox" name="05_Привычки[]" value="Курение"><span class="check-label">Курение</span></label>
+        <label class="check-item"><input type="checkbox" name="05_Привычки[]" value="Алкоголь регулярно (чаще 2 раз в неделю)"><span class="check-label">Алкоголь регулярно (чаще 2 раз в неделю)</span></label>
+        <label class="check-item"><input type="checkbox" name="05_Привычки[]" value="Работа связана с химией, красками, лаками (парикмахер, маникюр и тд)"><span class="check-label">Работа связана с химией, красками, лаками</span></label>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 6: Нервная система -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">06</span>Нервная система и эмоции</div>
+      <p class="hint" style="margin-bottom:16px;">Это физиология, не психология. Нервная система регулирует всё — от пищеварения до гормонов.</p>
+
+      <div class="field">
+        <label>Уровень стресса в среднем</label>
+        <div class="scale-row">
+          <span class="scale-label">низкий</span>
+          <div class="scale-options">
+            <button type="button" class="scale-btn" onclick="setScale(1,this)">1</button>
+            <button type="button" class="scale-btn" onclick="setScale(2,this)">2</button>
+            <button type="button" class="scale-btn" onclick="setScale(3,this)">3</button>
+            <button type="button" class="scale-btn" onclick="setScale(4,this)">4</button>
+            <button type="button" class="scale-btn" onclick="setScale(5,this)">5</button>
+            <button type="button" class="scale-btn" onclick="setScale(6,this)">6</button>
+            <button type="button" class="scale-btn" onclick="setScale(7,this)">7</button>
+            <button type="button" class="scale-btn" onclick="setScale(8,this)">8</button>
+            <button type="button" class="scale-btn" onclick="setScale(9,this)">9</button>
+            <button type="button" class="scale-btn" onclick="setScale(10,this)">10</button>
+          </div>
+          <span class="scale-label">высокий</span>
+        </div>
+        <input type="hidden" name="06_Стресс" id="stressValue" value="">
+      </div>
+
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Сложно расслабиться даже когда всё нормально"><span class="check-label">Сложно расслабиться — даже когда «всё нормально»</span></label>
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Фоновая тревога без причины"><span class="check-label">Фоновая тревога без причины</span></label>
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Раздражительность, вспышки гнева"><span class="check-label">Раздражительность, вспышки гнева</span></label>
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Апатия, нет мотивации и радости"><span class="check-label">Апатия, нет мотивации и радости</span></label>
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Склонность к депрессивным состояниям"><span class="check-label">Склонность к депрессивным состояниям</span></label>
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Плаксивость без причины"><span class="check-label">Плаксивость без явной причины</span></label>
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Еда как способ справиться с эмоциями"><span class="check-label">Еда как способ справиться с эмоциями</span></label>
+        <label class="check-item"><input type="checkbox" name="06_НС[]" value="Панические атаки"><span class="check-label">Панические атаки</span></label>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 7: Гормоны и цикл -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">07</span>Гормоны и цикл</div>
+      <div class="row">
+        <div class="field">
+          <label>Цикл</label>
+          <select name="07_Цикл">
+            <option value="" disabled selected>выбери</option>
+            <option>Регулярный (28–32 дня)</option>
+            <option>Нерегулярный</option>
+            <option>Очень короткий (меньше 24 дней)</option>
+            <option>Очень длинный (больше 35 дней)</option>
+            <option>Менопауза / постменопауза</option>
+            <option>Принимаю КОК / МГТ</option>
+            <option>Нет менструаций (другая причина)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Длительность менструации</label>
+          <select name="07_Длительность_менструации">
+            <option value="" disabled selected>выбери</option>
+            <option>1–2 дня (скудные)</option>
+            <option>3–5 дней (норма)</option>
+            <option>6–7 дней</option>
+            <option>Больше 7 дней</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Болезненность</label>
+          <select name="07_Боль_при_менструации">
+            <option value="" disabled selected>выбери</option>
+            <option>Нет боли</option>
+            <option>Лёгкий дискомфорт</option>
+            <option>Умеренная боль</option>
+            <option>Сильная — принимаю обезболивающие</option>
+            <option>Очень сильная — нарушает жизнь</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>ПМС</label>
+          <select name="07_ПМС">
+            <option value="" disabled selected>выбери</option>
+            <option>Почти нет</option>
+            <option>Умеренный</option>
+            <option>Сильный — влияет на жизнь</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="check-group" style="margin-bottom:18px;">
+        <label class="check-item"><input type="checkbox" name="07_Цикл[]" value="Симптомы усиливаются во второй половине цикла"><span class="check-label">Симптомы усиливаются во второй половине цикла</span></label>
+        <label class="check-item"><input type="checkbox" name="07_Цикл[]" value="Нагрубание груди перед менструацией"><span class="check-label">Нагрубание груди перед менструацией</span></label>
+        <label class="check-item"><input type="checkbox" name="07_Цикл[]" value="Отёки перед менструацией"><span class="check-label">Отёки перед менструацией</span></label>
+        <label class="check-item"><input type="checkbox" name="07_Цикл[]" value="Сниженное либидо"><span class="check-label">Сниженное либидо</span></label>
+        <label class="check-item"><input type="checkbox" name="07_Цикл[]" value="Циститы — бывают регулярно"><span class="check-label">Циститы — бывают регулярно</span></label>
+        <label class="check-item"><input type="checkbox" name="07_Цикл[]" value="Молочница — бывает регулярно"><span class="check-label">Молочница — бывает регулярно</span></label>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Дети</label>
+          <select name="07_Дети">
+            <option value="" disabled selected>выбери</option>
+            <option>Нет</option>
+            <option>Есть, не планирую</option>
+            <option>Есть, планирую ещё</option>
+            <option>Планирую первого</option>
+            <option>Проблемы с зачатием</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Диагнозы по гинекологии</label>
+          <select name="07_Гинекол_диагнозы">
+            <option value="" disabled selected>выбери</option>
+            <option>Нет</option>
+            <option>СПКЯ</option>
+            <option>Эндометриоз</option>
+            <option>Миома</option>
+            <option>Мастопатия</option>
+            <option>Несколько / другое</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Диагнозы щитовидной железы</label>
+        <select name="07_Щитовидка">
+          <option value="" disabled selected>выбери</option>
+          <option>Нет / не обследовалась</option>
+          <option>Гипотиреоз</option>
+          <option>Гипертиреоз</option>
+          <option>АИТ (аутоиммунный тиреоидит)</option>
+          <option>Узлы без диагноза</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 8: COVID и история болезней -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">08</span>История здоровья</div>
+
+      <div class="row">
+        <div class="field">
+          <label>COVID — болела?</label>
+          <select name="08_COVID">
+            <option value="" disabled selected>выбери</option>
+            <option>Нет</option>
+            <option>Да, 1 раз — лёгкая форма</option>
+            <option>Да, 1 раз — тяжёлая форма</option>
+            <option>Да, 2 и более раз</option>
+            <option>Не знаю</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Последствия COVID</label>
+          <select name="08_COVID_последствия">
+            <option value="" disabled selected>выбери</option>
+            <option>Нет</option>
+            <option>Усталость, туман в голове</option>
+            <option>Проблемы с дыханием</option>
+            <option>Выпадение волос</option>
+            <option>Несколько симптомов</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Хронические заболевания</label>
+        <div class="check-group">
+          <label class="check-item"><input type="checkbox" name="08_Хронические[]" value="Нет"><span class="check-label">Нет</span></label>
+          <label class="check-item"><input type="checkbox" name="08_Хронические[]" value="Сахарный диабет / преддиабет"><span class="check-label">Сахарный диабет / преддиабет</span></label>
+          <label class="check-item"><input type="checkbox" name="08_Хронические[]" value="Аутоиммунные заболевания"><span class="check-label">Аутоиммунные заболевания</span></label>
+          <label class="check-item"><input type="checkbox" name="08_Хронические[]" value="Заболевания сердца и сосудов"><span class="check-label">Заболевания сердца и сосудов</span></label>
+          <label class="check-item"><input type="checkbox" name="08_Хронические[]" value="Заболевания почек"><span class="check-label">Заболевания почек</span></label>
+          <label class="check-item"><input type="checkbox" name="08_Хронические[]" value="Онкология в анамнезе"><span class="check-label">Онкология в анамнезе</span></label>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:8px;">
+        <label>Операции в анамнезе</label>
+        <input type="text" name="08_Операции" placeholder="или напиши «нет»">
+      </div>
+
+      <div class="field">
+        <label>Антибиотики — когда последний раз?</label>
+        <select name="08_Антибиотики">
+          <option value="" disabled selected>выбери</option>
+          <option>Никогда или очень давно</option>
+          <option>Больше года назад</option>
+          <option>3–12 месяцев назад</option>
+          <option>Меньше 3 месяцев назад</option>
+          <option>Прямо сейчас / недавно закончила</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Препараты которые принимаю сейчас</label>
+        <input type="text" name="08_Препараты" placeholder="или напиши «нет»">
+      </div>
+
+      <div class="field">
+        <label>БАДы которые принимаю сейчас</label>
+        <input type="text" name="08_БАДы" placeholder="или напиши «нет»">
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 9: Семейный анамнез -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">09</span>Семейный анамнез</div>
+      <p class="hint" style="margin-bottom:16px;">Это важно — многие предрасположенности передаются по женской и мужской линии.</p>
+
+      <p class="sublabel">По маминой линии (мама, бабушка)</p>
+      <div class="check-group" style="margin-bottom:18px;">
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Проблемы со щитовидной железой"><span class="check-label">Проблемы со щитовидной железой</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Сахарный диабет"><span class="check-label">Сахарный диабет</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Онкология"><span class="check-label">Онкология</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Сердечно-сосудистые заболевания"><span class="check-label">Сердечно-сосудистые заболевания</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Аутоиммунные заболевания"><span class="check-label">Аутоиммунные заболевания</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Ожирение"><span class="check-label">Ожирение</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Депрессия, психические расстройства"><span class="check-label">Депрессия, психические расстройства</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Мама[]" value="Не знаю"><span class="check-label">Не знаю</span></label>
+      </div>
+
+      <p class="sublabel">По папиной линии (папа, дедушка)</p>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="09_Папа[]" value="Сахарный диабет"><span class="check-label">Сахарный диабет</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Папа[]" value="Онкология"><span class="check-label">Онкология</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Папа[]" value="Сердечно-сосудистые заболевания"><span class="check-label">Сердечно-сосудистые заболевания</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Папа[]" value="Аутоиммунные заболевания"><span class="check-label">Аутоиммунные заболевания</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Папа[]" value="Ожирение"><span class="check-label">Ожирение</span></label>
+        <label class="check-item"><input type="checkbox" name="09_Папа[]" value="Не знаю"><span class="check-label">Не знаю</span></label>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 10: Анализы -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">10</span>Анализы</div>
+      <div class="field">
+        <label>Последние анализы крови — когда?</label>
+        <select name="10_Анализы_когда">
+          <option value="" disabled selected>выбери</option>
+          <option>Меньше 3 месяцев назад</option>
+          <option>3–6 месяцев назад</option>
+          <option>6–12 месяцев назад</option>
+          <option>Больше года назад</option>
+          <option>Никогда / не помню</option>
+        </select>
+      </div>
+
+      <p class="sublabel">Что выявлялось в анализах (хотя бы раз):</p>
+      <div class="check-group">
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Низкий ферритин или железо"><span class="check-label">Низкий ферритин или железо</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Дефицит витамина D"><span class="check-label">Дефицит витамина D</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Дефицит B12"><span class="check-label">Дефицит B12</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Нарушения щитовидной железы (ТТГ, Т3, Т4, антитела)"><span class="check-label">Нарушения щитовидной железы (ТТГ, Т3, Т4, антитела)</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Высокий инсулин или нарушение глюкозы"><span class="check-label">Высокий инсулин или нарушение глюкозы</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Повышенный CRP или другие маркеры воспаления"><span class="check-label">Повышенный CRP или другие маркеры воспаления</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Нарушения холестерина или липидного профиля"><span class="check-label">Нарушения холестерина или липидного профиля</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Повышенный кортизол"><span class="check-label">Повышенный кортизол</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Нарушения половых гормонов (эстроген, прогестерон, тестостерон)"><span class="check-label">Нарушения половых гормонов (эстроген, прогестерон, тестостерон)</span></label>
+        <label class="check-item"><input type="checkbox" name="10_Анализы[]" value="Не знаю / не разбиралась в результатах"><span class="check-label">Не знаю / не разбиралась в результатах</span></label>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- БЛОК 11: Финальный -->
+    <div class="section">
+      <div class="section-title"><span class="section-number">11</span>Последнее — самое честное</div>
+      <div class="field">
+        <label>Что пробовала — и не сработало?</label>
+        <textarea name="11_Что_пробовала" placeholder="Диеты, протоколы, врачи, БАДы — что угодно"></textarea>
+      </div>
+      <div class="field">
+        <label>Что изменится, когда станет лучше?</label>
+        <textarea name="11_Цель" placeholder="Не «похудею». А как именно будет выглядеть твоя жизнь?"></textarea>
+      </div>
+    </div>
+
+    <div class="divider"><span>◆</span></div>
+
+    <!-- Инструкция про фото -->
+    <div class="info-box">
+      <p>После отправки анкеты пришли в мессенджер фото языка, ногтей, кожи (если есть высыпания) и всех БАДов, которые принимаешь сейчас. Без этих фото первичный разбор будет неполным.</p>
+    </div>
+
+    <button type="submit" class="submit-btn">Отправить анкету</button>
+  </form>
+
+  <div class="footer">
+    <div class="divider" style="width:100%"><span>◆</span></div>
+    <svg class="branch" width="160" height="40" viewBox="0 0 160 40">
+      <path d="M10 30 Q40 10 80 20 Q120 30 150 12" stroke="#C4956A" stroke-width="1" fill="none"/>
+      <circle cx="25" cy="22" r="2.5" fill="#C4956A"/>
+      <circle cx="50" cy="14" r="2" fill="#C4956A"/>
+      <circle cx="75" cy="19" r="3" fill="#C4956A"/>
+      <circle cx="100" cy="24" r="2" fill="#C4956A"/>
+      <circle cx="130" cy="17" r="2.5" fill="#C4956A"/>
+      <ellipse cx="25" cy="18" rx="5" ry="3" fill="rgba(196,149,106,0.2)" transform="rotate(-20 25 18)"/>
+      <ellipse cx="75" cy="15" rx="6" ry="3.5" fill="rgba(196,149,106,0.2)" transform="rotate(15 75 15)"/>
+      <ellipse cx="130" cy="13" rx="5" ry="3" fill="rgba(196,149,106,0.2)" transform="rotate(-10 130 13)"/>
+    </svg>
+    <p class="footer-brand">@eka.lucida · эмоциональная нутрициология</p>
+  </div>
+
+</div>
+
+<script>
+  function setScale(val, btn) {
+    btn.closest('.scale-options').querySelectorAll('.scale-btn').forEach((b,i) => {
+      b.classList.toggle('active', i < val);
+    });
+    document.getElementById('stressValue').value = val + '/10';
+  }
+</script>
+</body>
+</html>
